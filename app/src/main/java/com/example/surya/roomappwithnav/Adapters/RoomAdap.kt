@@ -1,5 +1,6 @@
 package com.example.surya.roomappwithnav.Adapters
 
+import android.arch.persistence.room.Room
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
@@ -8,11 +9,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import com.example.surya.roomappwithnav.DatabaseFile.RoomDatabases
+import com.example.surya.roomappwithnav.MainActivity
 import com.example.surya.roomappwithnav.Modal.Note
 import com.example.surya.roomappwithnav.R
+import com.example.surya.roomappwithnav.R.id.note
+import com.example.surya.roomappwithnav.listfragment
+import kotlinx.android.synthetic.main.fragment_createnote_fragment.*
 import kotlinx.android.synthetic.main.note_card.view.*
 
-class RoomAdap(context: Context, private var items: List<Note>,view: View): RecyclerView.Adapter<RoomAdap.ViewHolder>()
+class RoomAdap(context: Context, private var items: MutableList<Note>,view: View): RecyclerView.Adapter<RoomAdap.ViewHolder>()
 {
     var context: Context
     var view: View
@@ -23,6 +29,7 @@ class RoomAdap(context: Context, private var items: List<Note>,view: View): Recy
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val notedesc: String = items.get(position).note
+        val id: String = items.get(position).id.toString()
         holder.notedescription?.text = notedesc
 
         holder.notedescription.setOnClickListener {
@@ -31,6 +38,16 @@ class RoomAdap(context: Context, private var items: List<Note>,view: View): Recy
             mArgs.putString("Note", notedesc)
             mArgs.putString("key", items.get(position).id.toString())
             Navigation.findNavController(view).navigate(R.id.createnote_fragment,mArgs)
+        }
+
+        holder.notedeleteBtn.setOnClickListener {
+            val Db = Room.databaseBuilder(context, RoomDatabases::class.java,"note.db").allowMainThreadQueries().build()
+            val noteObj = Note()
+            noteObj.note = notedesc
+            noteObj.id = id.toLong()
+            Db.noteDao().delete(noteObj)
+            items.removeAt(position)
+            notifyDataSetChanged()
         }
     }
 
@@ -47,5 +64,6 @@ class RoomAdap(context: Context, private var items: List<Note>,view: View): Recy
     class ViewHolder(view: View): RecyclerView.ViewHolder(view)
     {
         var notedescription = view.notedesc
+        var notedeleteBtn = view.delNote
     }
 }

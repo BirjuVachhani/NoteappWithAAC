@@ -19,15 +19,14 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/note_card" />
 
-    <TextView
+    <ImageButton
         android:id="@+id/addNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:background="@drawable/fab_bg"
         android:padding="16dp"
-        android:text="Add"
-        android:textColor="#fff"
+        android:src="@drawable/ic_add_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

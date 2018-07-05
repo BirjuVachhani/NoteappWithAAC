@@ -42,12 +42,10 @@ class listfragment : Fragment() {
 
             val options = NavOptions.Builder()
                     .setEnterAnim(R.anim.slide_in_right)
-                    .setExitAnim(R.anim.slide_out_left)
-//                    .setPopEnterAnim(R.anim.slide_in_left)
-//                    .setPopExitAnim(R.anim.slide_out_right)
+                    //.setExitAnim(R.anim.slide_out_left)
+                    .setPopEnterAnim(R.anim.slide_in_left)
+                   // .setPopExitAnim(R.anim.slide_out_right)
                     .build()
-
-
             Navigation.findNavController(view).navigate(R.id.createnote_fragment,mArgs,options)
         }
     }
@@ -63,9 +61,12 @@ class listfragment : Fragment() {
                         rvRoom?.adapter = adapterObj
                         adapterObj.notifyDataSetChanged()
                 }
-
             }
         })
     }
 
+    fun changeUi()
+    {
+        adapterObj.notifyDataSetChanged()
+    }
 }

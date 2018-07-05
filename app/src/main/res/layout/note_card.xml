@@ -22,15 +22,14 @@
             android:text="daily note"
             android:textSize="15dp" />
 
-        <TextView
+        <ImageButton
             android:id="@+id/delNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginTop="5dp"
             android:background="#fff"
-            android:textColor="#ff0000"
-            android:text="delete" />
+            android:src="@drawable/ic_delete_black_24dp" />
 
     </RelativeLayout>
 
